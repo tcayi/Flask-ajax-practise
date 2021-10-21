@@ -16,10 +16,11 @@
     <script>
     
         var ctx = document.getElementById("Flowgraph").getContext('2d');
-        const x = [];
-        const y1s = [];
-        const y2s = [];
+        const x_axis = [];
+        const y1_data = [];
+        const y2_data = [];
 
+	// x,y1,y2 are the data id of the data variable from flask
         var datapoint = JSON.parse('{{data | tojson | safe}}');	
         const a= datapoint.x;
         const b= datapoint.y1;
@@ -78,9 +79,9 @@
                         data: JSON.stringify(datapoint),
 
                         success: function(){
-                            x.push(datapoint.a);
-                            y1s.push(datapoint.b);
-                            y2s.push(datapoint.c);                                                
+                            x_axis.push(a);
+                            y1_data.push(b);
+                            y2_data.push(c);                                               
                         
                             // Re-render the graph
 						    Mychart.update();
