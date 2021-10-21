@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datasource"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js" integrity="sha512-Wt1bJGtlnMtGP0dqNFH1xlkLBNpEodaiQ8ZN5JLA5wpc1sUlk/O5uuOMNgvzddzkpvZ9GLyYNa8w2s7rqiTk5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+
+
+<body>
+
+    <div><canvas id="Flowgraph" width="500" height="500" ></canvas></div>
+    <script>
+    
+        var ctx = document.getElementById("Flowgraph").getContext('2d');
+        const x = [];
+        const y1s = [];
+        const y2s = [];
+
+        var datapoint = JSON.parse('{{data | tojson | safe}}');	
+        const a= datapoint.x;
+        const b= datapoint.y1;
+        const c= datapoint.y2;
+
+        const Mychart = new Chart(ctx, {
+
+            labels: x,
+            datasets: [{
+                    type: "line",
+                    data: y1s, 
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    fill: false,			
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                },
+                {
+                    type: "line",
+					data: y2s, 
+					backgroundColor: 'rgba(255, 99, 132, 0.2)',
+					fill:false,
+					lineTension: 0,
+					borderColor: 'rgba(255, 99, 132, 1)'
+                }
+           ],
+           options: {
+			
+				responsive: true,
+				plugins: {},
+				animation:{	// Turning off animation of the lines when the graph loads
+					duration: 0,
+				},
+				maintainAspectRatio: false,	
+				ticks: {
+					beginAtZero:false
+				},
+				
+				scales:{
+					yAxes: [{
+						ticks: {
+							beginAtZero: true,
+						}
+					}]
+				}
+			}
+
+        });
+
+
+        var GetData= function(){
+				$.ajax({
+                        type: "GET",
+                        url:"/",
+                        data: JSON.stringify(datapoint),
+
+                        success: function(){
+                            x.push(datapoint.a);
+                            y1s.push(datapoint.b);
+                            y2s.push(datapoint.c);                                                
+                        
+                            // Re-render the graph
+						    Mychart.update();
+					},
+									         
+				});
+			};
+
+        // get new data every 3 seconds
+        setInterval(GetData, 3000);
+        
+    </script>
+
+    
+</body>
+</html>
