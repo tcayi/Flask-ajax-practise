@@ -1,11 +1,12 @@
 from flask import Flask, request, render_template, make_response
 import datetime
+import webbrowser
 import random, string
 from random import randrange
 
 app = Flask(__name__)
 
-@app.route('/', methods=['GET','POST'])
+@app.route('/check', methods=['GET','POST'])
 def index():
 
     a = randrange(100)
@@ -20,4 +21,6 @@ def index():
     return render_template('test.html', a=a, b=b, c=c, data=data)
 
 if __name__ == '__main__':
+    app.debug = False
+    webbrowser.open('http://127.0.0.1:5000/check', 0, False)
     app.run(debug=True)
