@@ -22,9 +22,9 @@
 
 	// x,y1,y2 are the data id of the data variable from flask
         var datapoint = JSON.parse('{{data | tojson | safe}}');	
-        const a= datapoint.x;
-        const b= datapoint.y1;
-        const c= datapoint.y2;
+        var a= datapoint.x;
+        var b= datapoint.y1;
+        var c= datapoint.y2;
 
         const Mychart = new Chart(ctx, {
 
