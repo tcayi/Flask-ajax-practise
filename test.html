@@ -93,25 +93,26 @@
 	var GetData= function(){
 		$.ajax({
 			method: 'POST',
-			url:"/status",
+			url:"/check",
 			cache: false,
 			dataType: 'json',
 			// use to show the server that it should be in json format 
 
 			contentType: 'application/json; charset=UTF-8',
-			//Is this set as a constant? How to set it to refresh
-
+			
 			data:JSON.stringify(datapoint),
 
 			success: function(){					
-			// Problem: Only grabs data in the first iteration
+			// Problem: Only grabs data in the first iteration. Is the reason due to the above string being possibly a constant?
+			// If so, how should I make the datapoint be new everytime I grab a new value from flask server?
 				
+				//Trying to push values obtained from flask to the chart
 				Mychart.data.labels.push(datapoint.time);
 				Mychart.data.datasets[0].data.push(datapoint.flow);
 				Mychart.data.datasets[1].data.push(datapoint.rawflow);	
 				console.log(datapoint)
 			
-			// Re-render the graph
+			// Update the new graph
 				Mychart.update();
 			},		
 		});
