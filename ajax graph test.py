@@ -16,18 +16,18 @@ def index():
     c = random.choice(string.ascii_letters)
     print(a,b,c)
 
-    data= {"y1": a, "y2": b, "x": c}
+    datap= {"y1": a, "y2": b, "x": c}
     
     # Form the generated data into a json format
-    datap = json.dumps(datap)
-    print(datap)
+    data = json.dumps(datap)
+    print(data)
     
     # Q: Am I supposed to use another flask route to recieve the request from the html front end?
     # If so, how to ensure that I return the updated json object to frontend? 
     # (I know a possible method is through (if request method == post), but im not sure about afterwards
     
 
-    return render_template('test.html', a=a, b=b, c=c, datap=datap)
+    return render_template('test.html', a=a, b=b, c=c, data=data)
 
 if __name__ == '__main__':
     app.debug = False
