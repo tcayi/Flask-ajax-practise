@@ -23,7 +23,7 @@
     <div><canvas id="Flowgraph" width="500" height="500" ></canvas></div>
     <script>
 	    
-		var datap = {{datap | tojson | safe}};  //json string
+		var datap = {{data | tojson | safe}};  //json string
 		var datapoint = JSON.parse(datap);     //json object
 				
 						
@@ -92,7 +92,7 @@
 
 	var GetData= function(){
 		$.ajax({
-			method: 'POST',
+			method: 'GET',
 			url:"/check",
 			cache: false,
 			// dataType: 'json',
